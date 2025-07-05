@@ -1,0 +1,43 @@
+# In your Cargo.toml
+
+[package]
+name = "tectonic-cxx"
+version = "0.1.0"
+edition = "2021" # "2024" is not a stable edition yet, use "2021"
+
+[lib]
+name = "tectonic"
+crate-type = ["staticlib"]
+
+[dependencies]
+tectonic = { version = "0.15.0" , features = ["external-harfbuzz"] }
+cxx = "1.0"
+anyhow = "1.0"
+
+[build-dependencies]
+cxx-build = "1.0"
+anyhow = "1.0"
+
+# Add this section for cargo-c
+[package.metadata.capi]
+name = "tectonic"
+
+[package.metadata.capi.header]
+generation = false
+
+[package.metadata.capi.install.include]
+asset = [
+    {from="target/tectonic.h"},
+    {from="include/tectonic-cxx-interface.h"}
+]
+
+[package.metadata.capi.library]
+name = "tectonic"
+install_dir = "lib"
+
+[package.metadata.capi.pkg_config]
+name = "tectonic"
+
+[features]
+default = []
+capi = []
