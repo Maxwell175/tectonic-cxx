@@ -102,6 +102,10 @@ jobs:
 
       - name: Build static library (macOS)
         if: matrix.os == 'macos-latest'
+        env:
+          PKG_CONFIG_PATH: "/opt/homebrew/opt/icu4c/lib/pkgconfig"
+          CXXFLAGS: "-I/opt/homebrew/opt/harfbuzz/include -std=c++17"
+          CFLAGS: "-I/opt/homebrew/opt/harfbuzz/include"
         shell: bash
         run: |
           cargo cinstall \
